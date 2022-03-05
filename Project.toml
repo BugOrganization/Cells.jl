@@ -1,0 +1,9 @@
+name = "Cells"
+uuid = "c368a612-970d-47d0-a74e-c409b3f7b97e"
+authors = ["Chong Wang <atbug@outlook.com>"]
+version = "0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
