@@ -44,7 +44,7 @@ function print_poscar(
         @printf f "%6.1f\n" 1.0
         for i in 1:3
             for j in 1:3
-                @printf f "%22.16f" cell.lattice_vectors[j, i]
+                @printf f "%20.14f" cell.lattice_vectors[j, i]
             end
             @printf f "\n"
         end
@@ -64,7 +64,7 @@ function print_poscar(
         @printf f "Direct\n"
         for i in 1:size(cell.coordinates, 2)
             for j in 1:3
-                @printf f "%22.16f" cell.coordinates[j, i]
+                @printf f "%20.14f" cell.coordinates[j, i]
             end
             if selective_dynamics
                 write(f, selective_dynamics_string)
@@ -196,7 +196,7 @@ function print_fdf(filename::String, cell::Cell, species_numbers::Dict{String, I
         @printf f "%%block LatticeVectors\n"
         for i in 1:3
             for j in 1:3
-                @printf f "%22.16f" cell.lattice_vectors[j, i]
+                @printf f "%20.14f" cell.lattice_vectors[j, i]
             end
             @printf f "\n"
         end
@@ -205,7 +205,7 @@ function print_fdf(filename::String, cell::Cell, species_numbers::Dict{String, I
         @printf f "%%block AtomicCoordinatesAndAtomicSpecies\n"
         for i in 1:size(cell.coordinates, 2)
             for j in 1:3
-                @printf f "%22.16f" cell.coordinates[j, i]
+                @printf f "%20.14f" cell.coordinates[j, i]
             end
             @printf f "%8d" atom_labels[i]
             @printf f "\n"
@@ -238,7 +238,7 @@ function print_openmx(
         @printf f "<Atoms.UnitVectors\n"
         for i in 1:3
             for j in 1:3
-                @printf f "%22.16f" cell.lattice_vectors[j, i]
+                @printf f "%20.14f" cell.lattice_vectors[j, i]
             end
             @printf f "\n"
         end
@@ -249,7 +249,7 @@ function print_openmx(
         @printf f "<Atoms.SpeciesAndCoordinates\n"
         for i in 1:length(cell.atoms)
             @printf(
-                f, "%8d%4s%22.16f%22.16f%22.16f%4.1f%4.1f%s\n", i, cell.atoms[i],
+                f, "%8d%4s%20.14f%20.14f%20.14f%4.1f%4.1f%s\n", i, cell.atoms[i],
                 cell.coordinates[1, i], cell.coordinates[2, i], cell.coordinates[3, i],
                 species_nelectrons[cell.atoms[i]] / 2, species_nelectrons[cell.atoms[i]] / 2,
                 " 0.0 0.0 0.0 0.0 0 off"
