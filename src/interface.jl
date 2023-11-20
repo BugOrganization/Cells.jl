@@ -17,7 +17,7 @@ function read_poscar(filename::String)
         lattice_vectors = lattice_scale * hcat([map(x -> parse(Float64, x), split(readline(f))) for _ in 1:3]...)
         atom_types = split(readline(f))
         atom_counts = map(x -> parse(Int64, x), split(readline(f)))
-        atoms = [atom_types[i] for i in 1:length(atom_types) for _ in 1:atom_counts[i]]
+        atoms = [atom_type for atom_type in atom_types for _ in 1:atom_counts[i]]
         coordinates_specification = readline(f)
         if startswith(coordinates_specification, r"D|d")
             coordinates = hcat([map(x -> parse(Float64, x), split(readline(f))[1:3]) for _ in 1:sum(atom_counts)]...)
@@ -38,6 +38,7 @@ function print_poscar(
     selective_dynamics::Bool=false,
     selective_dynamics_string::String=" F F T"
 )
+    sort_atoms!(cell)
     open(filename, "w") do f
         write(f, title)
         @printf f "\n"
@@ -178,6 +179,7 @@ function read_fdf(filename::String)
 end
 
 function print_fdf(filename::String, cell::Cell, species_numbers::Dict{String, Int64})
+    sort_atoms!(cell)
     open(filename, "w") do f
         species_names = unique(cell.atoms)
         species_labels = collect(1:length(species_names))
@@ -225,6 +227,7 @@ function print_openmx(
     species_settings::Dict{String,String},
     species_nelectrons::Dict{String,Int64}
 )
+    sort_atoms!(cell)
     open(filename, "w") do f
         species = unique(cell.atoms)
         @printf f "Species.Number%8d\n" length(species)

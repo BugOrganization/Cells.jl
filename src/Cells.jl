@@ -20,13 +20,27 @@ function Cell(
     atoms::Vector{<:AbstractString},
     coordinates::AbstractMatrix{<:Real}
 )
-    perm = sortperm(atoms)
-    return Cell(lattice_vectors, atoms[perm], mod.(coordinates[:, perm], 1.0), length(atoms))
+    return Cell(lattice_vectors, atoms, coordinates, length(atoms))
 end
 
 function Base.show(io::IO, cell::Cell)
     print(io, "Cell: $(length(cell.atoms)) atoms")
 end
+
+
+function sort_atoms!(cell::Cell)
+    perm = sortperm(cell.atoms)
+    cell.atoms = cell.atoms[perm]
+    cell.coordinates = cell.coordinates[:, perm]
+    return cell
+end
+
+
+function move_to_home_unit_cell!(cell::Cell)
+    cell.coordinates = mod.(cell.coordinates, 1.0)
+    return cell
+end
+
 
 include("interface.jl")
 
