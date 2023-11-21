@@ -17,7 +17,7 @@ function read_poscar(filename::String)
         lattice_vectors = lattice_scale * hcat([map(x -> parse(Float64, x), split(readline(f))) for _ in 1:3]...)
         atom_types = split(readline(f))
         atom_counts = map(x -> parse(Int64, x), split(readline(f)))
-        atoms = [[atom_type for (i, atom_type) in enumerate(atom_types) for _ in 1:atom_counts[i]]]
+        atoms = [atom_type for (i, atom_type) in enumerate(atom_types) for _ in 1:atom_counts[i]]
         coordinates_specification = readline(f)
         if startswith(coordinates_specification, r"D|d")
             coordinates = hcat([map(x -> parse(Float64, x), split(readline(f))[1:3]) for _ in 1:sum(atom_counts)]...)
