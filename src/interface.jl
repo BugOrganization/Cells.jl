@@ -104,7 +104,7 @@ end
 
 function _get_species!(f, species_labels, species_numbers, species_names)
     mark(f)
-    if !_endswith_ignore_case(readline(f), "ChemicalSpeciesLabel")
+    if !_endswith_ignore_case(readline(f), " ChemicalSpeciesLabel")
         reset(f)
         return false
     else
@@ -113,7 +113,7 @@ function _get_species!(f, species_labels, species_numbers, species_names)
 
     while true
         foo = readline(f)
-        _endswith_ignore_case(foo, "ChemicalSpeciesLabel") && break
+        _endswith_ignore_case(foo, " ChemicalSpeciesLabel") && break
         push!(species_labels, parse(Int64, split(foo)[1]))
         push!(species_numbers, parse(Int64, split(foo)[2]))
         push!(species_names, split(foo)[3])
@@ -123,7 +123,7 @@ end
 
 function _get_lattice!(f, lattice_vectors)
     mark(f)
-    if !_endswith_ignore_case(readline(f), "LatticeVectors")
+    if !_endswith_ignore_case(readline(f), " LatticeVectors")
         reset(f)
         return false
     else
@@ -132,13 +132,13 @@ function _get_lattice!(f, lattice_vectors)
     for i in 1:3
         lattice_vectors[:, i] = map(x -> parse(Float64, x), split(readline(f)))
     end
-    @assert _endswith_ignore_case(readline(f), "LatticeVectors")
+    @assert _endswith_ignore_case(readline(f), " LatticeVectors")
     return true
 end
 
 function _get_coordinates!(f, coordinates, atom_labels)
     mark(f)
-    if !_endswith_ignore_case(readline(f), "AtomicCoordinatesAndAtomicSpecies")
+    if !_endswith_ignore_case(readline(f), " AtomicCoordinatesAndAtomicSpecies")
         reset(f)
         return false
     else
@@ -146,7 +146,7 @@ function _get_coordinates!(f, coordinates, atom_labels)
     end
     while true
         foo = readline(f)
-        _endswith_ignore_case(foo, "AtomicCoordinatesAndAtomicSpecies") && break
+        _endswith_ignore_case(foo, " AtomicCoordinatesAndAtomicSpecies") && break
         push!(coordinates, map(x -> parse(Float64, x), split(foo)[1:3]))
         push!(atom_labels, parse(Int64, split(foo)[4]))
     end
